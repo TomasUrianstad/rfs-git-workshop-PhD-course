@@ -4,3 +4,9 @@
 .Ruserdata
 
 *.Rproj
+
+*.docx
+*.pdf
+*.html
+
+/manuscript_files/
