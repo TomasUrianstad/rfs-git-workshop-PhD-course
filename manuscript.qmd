@@ -1,0 +1,18 @@
+---
+title: "Title of my paper"
+format: html
+editor_options: 
+  chunk_output_type: console
+bibliography: resourses/bib.bib
+csl: citation-style.csl
+link-citations: true
+---
+
+add a reference [@Hemingway1952]
+
+
+```{r}
+hist(rnorm(100))
+
+```
+
