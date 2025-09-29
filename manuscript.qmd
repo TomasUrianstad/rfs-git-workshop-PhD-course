@@ -1,18 +1,77 @@
 ---
-title: "Title of my paper"
+title: "Homework HEV9009"
+author: Tomas Urianstad Odden 
 format: html
 editor_options: 
   chunk_output_type: console
 bibliography: resourses/bib.bib
-csl: citation-style.csl
+csl: resourses/citation-style.csl
 link-citations: true
 ---
 
-add a reference [@Hemingway1952]
+```{r}
+#| echo: false
+#| message: false
+
+
+# necessary packages 
+library(readxl)
+library(tidyverse)
+
+```
+
+Hi! In this paper, I will present data from my PhD work. To practice my R skills, I have created a table showing the mean maximal oxygen consumption (V<span>&#x0307;</span>O~2max~) for females and males at baseline, along with three different figures based on the same data. Figures 1, 2, and 3 display V<span>&#x0307;</span>O~2max~ indexed to body mass for females and males before, during, and after 1 year of endurance exercise training. Improved V<span>&#x0307;</span>O~2max~ with endurance exercise training is associated with a lower risk of all-cause mortality and morbidity ([@ross2019]).
+
+
 
 
 ```{r}
-hist(rnorm(100))
+#| echo: false
+
+
+data <- read_excel("data/data.xlsx", na = "na")
+
+
+d <- data |> 
+  filter(timepoint == 1) |>
+  mutate(vo2.kg = vo2 / weight) |>
+group_by(sex) |>
+  summarise(vo2.m = mean(vo2.kg, na.rm = T),
+            vo2.s = sd(vo2.kg, na.rm = T)) |>
+  mutate(vo2.kg = paste0(round(vo2.m,1), " (", round(vo2.s, 1), ")"))
+
+f <- d |>
+  filter(sex == "f") |>
+  select(vo2.kg)
+
+m <- d |>
+  filter(sex == "m") |>
+  select(vo2.kg)
 
 ```
+           
+------------------ | Female     | Male 
+------------------ | ---------- | ---------- 
+VO2max (mL/min/kg) | 22.0 (6.3) | 27.3 (9.4)
+
+
+
+
+
+![](figures/figure1.png)
+
+
+![](figures/figure2.png)
+
+
+
+
+![](figures/figure3.png)
+
+
+
+Feel free to suggest any changes that might improve the text, tables, or figures.
+
+Best wishes,
+Tomas Urianstad Odden 
 
