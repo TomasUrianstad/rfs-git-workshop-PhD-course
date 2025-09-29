@@ -8,5 +8,6 @@
 *.docx
 *.pdf
 *.html
+*.png
 
 /manuscript_files/
