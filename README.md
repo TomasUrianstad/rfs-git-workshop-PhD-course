@@ -1,13 +1,12 @@
 # RFS git workshop
 
-This is an edit from the online repository
+## Homework week 40
 
-Another remote change 
+This repository contains data, code and additional files needed to reproduce the analyses presented in the manuscript titled "Homework HEV9009".
 
-Another edit, locally
+### Repository structure
+Scripts used creating figures (1-3) are stored in the ./R. ./data contains raw data. ./resources contains files used to produce references.
 
+The manuscript.qmd file compiles the manuscript
 
-Helo! 
-
-
-This is work done on the new branch
+#### Remember to source the figures before trying to render the qmd file!!!! 
