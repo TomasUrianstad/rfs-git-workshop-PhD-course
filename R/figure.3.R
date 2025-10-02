@@ -1,9 +1,9 @@
 ## necessary packages 
 
-# library(readxl)
-# library(tidyverse)
-# library(ggtext)
-# library(cowplot)
+library(readxl)
+library(tidyverse)
+library(ggtext)
+library(cowplot)
 
 
 
@@ -126,7 +126,5 @@ plot <- ggplot(aes(timepoint, vo2.kg, colour = sex, group = id), data = d) +
         plot.caption = element_textbox_simple(padding = margin(20, 10, 5, 0), size = 18)) 
 
 
-
-ggsave2("figure3.png", plot, path = "figures", width = 30, height = 20,
-        dpi = 600,
-        units = "cm", device= "png")
+# save figure3 as an RDS object
+saveRDS(plot, "./figures/figure3.RDS")

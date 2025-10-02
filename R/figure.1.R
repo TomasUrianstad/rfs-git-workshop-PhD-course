@@ -1,9 +1,9 @@
 ## necessary packages 
 
-# library(readxl)
-# library(tidyverse)
-# library(ggtext)
-# library(cowplot)
+library(readxl)
+library(tidyverse)
+library(ggtext)
+library(cowplot)
 
 
 
@@ -114,7 +114,6 @@ mean <-  d |>
 
  
   
-  ggsave2("figure1.png", plot, path = "figures", width = 30, height = 20,
-          dpi = 600,
-          units = "cm", device= "png")
+# save figure1 as an RDS object
+saveRDS(plot, "./figures/figure1.RDS")
          

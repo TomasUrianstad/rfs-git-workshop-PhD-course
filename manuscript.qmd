@@ -56,17 +56,39 @@ VO2max (mL/min/kg) | 22.0 (6.3) | 27.3 (9.4)
 
 
 
+```{r}
+#| echo: false
 
 
-![](figures/figure1.png)
+figure1 <- readRDS("./figures/figure1.RDS")
+
+figure1
+
+```
 
 
-![](figures/figure2.png)
+
+```{r}
+#| echo: false
+
+
+figure2 <- readRDS("./figures/figure2.RDS")
+
+figure2
+
+```
 
 
 
+```{r}
+#| echo: false
 
-![](figures/figure3.png)
+
+figure3 <- readRDS("./figures/figure3.RDS")
+
+figure3
+
+```
 
 
 
