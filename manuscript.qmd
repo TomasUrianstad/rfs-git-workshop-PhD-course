@@ -4,8 +4,8 @@ author: Tomas Urianstad Odden
 format: html
 editor_options: 
   chunk_output_type: console
-bibliography: resourses/bib.bib
-csl: resourses/citation-style.csl
+bibliography: resources/bib.bib
+csl: resources/citation-style.csl
 link-citations: true
 ---
 
