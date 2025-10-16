@@ -1,16 +1,12 @@
 ## necessary packages 
 
-library(readxl)
 library(tidyverse)
 library(ggtext)
 library(cowplot)
+library(tomas.data)
 
 
 
-
-
-# load data
-data <- read_excel("data/data.xlsx", na = "na")
 
 
 
@@ -53,7 +49,7 @@ mean <-  d |>
             sd = sd(vo2.kg, na.rm = T))
   
   #write caption text
-  caption_text <- "**Figure 1** illustrates maximal oxygen uptake indexed to body mass for females (red) and males (blue) before, during, and after a 1-year endurance training period. Individual values are represented by transparent points, while the mean and standard deviation are shown with solid points and connected whiskers." 
+  #caption_text <- "**Figure 1** illustrates maximal oxygen uptake indexed to body mass for females (red) and males (blue) before, during, and after a 1-year endurance training period. Individual values are represented by transparent points, while the mean and standard deviation are shown with solid points and connected whiskers." 
 
   
   #make ggplot 
@@ -76,7 +72,7 @@ mean <-  d |>
   theme_classic() +
   
   #use labs to adjust y-axis text 
-  labs(y = expression("V\u0307"*O[2*max]~(mL %.% min^{-1} %.% kg^{-1}))) + 
+ # labs(y = expression("V\u0307"*O[2*max]~(mL %.% min^{-1} %.% kg^{-1}))) + 
     
   labs(caption = caption_text) +  
   

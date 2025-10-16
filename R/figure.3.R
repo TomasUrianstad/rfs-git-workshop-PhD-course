@@ -1,21 +1,15 @@
 ## necessary packages 
 
-library(readxl)
 library(tidyverse)
 library(ggtext)
 library(cowplot)
+library(tomas.data)
 
 
 
 
 
-# load data
-data <- read_excel("data/data.xlsx", na = "na")
-
-
-
-
-d <- data |> 
+ data |> 
   
   #select variables of intrest 
   select(id, sex, timepoint, test, weight, vo2) |>
@@ -65,7 +59,7 @@ mean <-  d |>
             sd = sd(vo2.kg, na.rm = T))
 
 #write caption text
-caption_text <- "**Figure 3** shows the percentage change in maximal oxygen uptake indexed to body mass for females (pink) and males (blue) before, during, and after a 1-year endurance training period. Individual values are represented by transparent points and lines, while the mean and standard deviation are depicted with solid points and connected whiskers." 
+#caption_text <- "**Figure 3** shows the percentage change in maximal oxygen uptake indexed to body mass for females (pink) and males (blue) before, during, and after a 1-year endurance training period. Individual values are represented by transparent points and lines, while the mean and standard deviation are depicted with solid points and connected whiskers." 
 
 
 #make ggplot 
@@ -90,7 +84,7 @@ plot <- ggplot(aes(timepoint, vo2.kg, colour = sex, group = id), data = d) +
   theme_classic() +
   
   #use labs to adjust y-axis text 
-  labs(y = expression("V\u0307"*O[2*max]~("%"))) + 
+  #labs(y = expression("V\u0307"*O[2*max]~("%"))) + 
   
   labs(caption = caption_text) +  
   

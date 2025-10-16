@@ -1,0 +1,224 @@
+---
+title: "sim"
+author: "Tomas"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+```{r}
+
+n <- 20
+intercept <- 5
+slope <- 0.2
+sigma <- 0.1
+xmin <- 5
+xmax <- 15
+
+
+
+
+
+#runif ranodom for somthing...
+x <- runif(n, min = xmin, max = xmax)
+
+#rnorm random sampling from a normal distribution
+y <- rnorm(n, mean = intercept + slope * x, sd = sigma) 
+
+
+plot(x, y)
+
+
+m <- lm(y ~ x)
+
+
+summary(m)
+
+```
+
+
+
+
+
+```{r}
+
+# a basic function
+
+fun_name <- function(n = 20,
+                     intercept = 5,
+                     slope = 0.2,
+                     sigma = 0.1,
+                     xmin = 5,
+                     xmax = 15)  {
+  
+  #this is the body
+  x <- runif(n, min = xmin, max = xmax)
+  y <- rnorm(n, mean = intercept + slope * x, sd = sigma)
+  
+  
+  #the output
+  return(data.frame(x, y))
+  
+  
+}
+
+set.seed(1)
+sim_data <- fun_name(n= 10, intercept = 10, 
+         slope = 0.5, sigma = 0.5, 
+         xmin = 0, xmax = 10)
+
+m <- lm(y ~ x, data = sim_data)
+
+summary(m)
+
+
+
+```
+
+
+
+
+## Counfounding 
+
+### A matimatical formula for the data distribution 
+
+$$
+
+\begin{align}
+y_i &\sim \operatorname{Normal}(\mu_i, \sigma) \\
+z &\sim \operatorname{Binomial}(0.5) \\
+x_i &\sim \operatorname{Normal}(\mu_{x[i]}, \ sigma_x) \\
+\mu &= 0.5 \times z_i \\
+\mu_x &= 0.3 \times z_i \\
+\sigma &= 0.1 \\
+\sigma &= 0.1 \\
+\end{align}
+
+$$
+
+
+
+### A DAG showing counfounding 
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "A DAG showing our model for a counfounding variable"
+#| label: fig-dag1
+
+
+library(tidyverse)
+library(ggdag)
+
+
+coord <- tibble(name = c("x", "y", "z"),
+                x = c(1, 2, 1.5),
+                y = c(1, 1, 2))
+
+dag <- dagify(y ~ z,
+              x ~ z, 
+              coords = coord)
+
+
+fig-dag1 <- dag |> 
+  tidy_dagitty() |>
+  ggplot(aes(x = x, y = y,
+             xend = xend, yend = yend)) +
+  geom_dag_point(color = "white") +
+  geom_dag_text(color = "black", size = 8) +
+  geom_dag_edges(arrow_directed = grid::arrow(length = grid::unit(5, "pt"), 
+                                              type = "closed")) +
+  
+  theme_dag()
+
+
+
+
+
+```
+
+
+### A simulation 
+
+
+
+
+```{r}
+
+
+
+sim1 <- function(n = 100,
+                 zparam = 0.5,
+                 sigmay = 1,
+                 sigmax = 1,
+                 betay = 0.5, 
+                 betax = 0.5) {
+
+n = 10
+z <- rbinom(n, 1, zparam)
+y <- rnorm(n, mean = betay * z, sd = sigmay)
+x <- rnorm(n, mean = betax * z, sd = sigmax)
+
+
+
+
+return(data.frame(x, z, y))
+
+}
+
+
+dat <- sim1()
+
+m1 <- lm(y ~ x, data = dat)
+m2 <- lm(y ~ x +z, data = dat)
+
+
+summary(m1)
+summary(m2)
+
+
+set.seed(1)
+results <- list()
+
+for(i in 1:1000) {
+  
+  dat1 <- sim1()
+  
+  dat2 <- sim1(sigmax = 0.2,
+               sigmay = 0.2)
+  
+  m1 <- lm(y ~ x, data = dat1)
+  m2 <- lm(y ~ x, data = dat2)
+  
+  
+  results[[i]] <- data.frame(model = c("m1", "m2"),
+             estimate = c(coef(m1)[2],
+                          coef(m2)[2]))
+  
+  
+  
+}
+
+
+bind_rows(results) |>
+  ggplot(aes(model, estimate)) +
+  geom_point(position = position_jitter(width = 0.1),
+             alpha = 0.2, 
+             shape = 21,
+             color = "blue") + 
+  theme_classic()
+
+
+
+
+```
+
+
+
+
+
+

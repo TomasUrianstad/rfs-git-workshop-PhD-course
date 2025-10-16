@@ -15,8 +15,8 @@ link-citations: true
 
 
 # necessary packages 
-library(readxl)
 library(tidyverse)
+library(tomas.data)
 
 ```
 
@@ -29,7 +29,7 @@ Hi! In this paper, I will present data from my PhD work. To practice my R skills
 #| echo: false
 
 
-data <- read_excel("data/data.xlsx", na = "na")
+
 
 
 d <- data |> 
